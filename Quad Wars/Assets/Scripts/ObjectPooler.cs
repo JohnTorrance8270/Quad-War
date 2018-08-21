@@ -60,8 +60,17 @@ public class ObjectPooler : MonoBehaviour
         objectToSpawn.transform.position = position;
         objectToSpawn.transform.rotation = rotation;
 
+        IPooledObject pooledObject = objectToSpawn.GetComponent<IPooledObject>();
+
+        if(pooledObject != null)
+        {
+            pooledObject.OnObjectSpawn();
+        }
+
         poolDictionary[tag].Enqueue(objectToSpawn);
 
         return objectToSpawn;
     }
+
+    //onenable instead of interafce and then obv setactive to fglase upon a certain condition occuring
 }
