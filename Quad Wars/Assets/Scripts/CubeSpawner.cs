@@ -10,11 +10,23 @@ public class CubeSpawner : MonoBehaviour
 	void Start ()
     {
         objectPooler = ObjectPooler.Instance;
-	}
+        IntermittentSpawn();
+    }
 	
-	// Update is called once per frame
+    private void IntermittentSpawn()
+    {
+        InvokeRepeating("CubeSpawn", 1.0f, 4.0f);
+    }
+
+    private void CubeSpawn()
+    {
+        GameObject objectToSpawn = objectPooler.SpawnFromPool("Cube", transform.position, Quaternion.identity);
+        objectToSpawn.SetActive(true);
+    }
+
+    // Update is called once per frame
     void FixedUpdate()
     {
-        objectPooler.SpawnFromPool("Cube", transform.position, Quaternion.identity);
+        
     }
 }

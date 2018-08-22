@@ -56,7 +56,7 @@ public class ObjectPooler : MonoBehaviour
 
         GameObject objectToSpawn = poolDictionary[tag].Dequeue();
 
-        objectToSpawn.SetActive(true);
+        //objectToSpawn.SetActive(true);
         objectToSpawn.transform.position = position;
         objectToSpawn.transform.rotation = rotation;
 
@@ -69,8 +69,14 @@ public class ObjectPooler : MonoBehaviour
 
         poolDictionary[tag].Enqueue(objectToSpawn);
 
+        StartCoroutine(WaitToDisable(objectToSpawn));
+
         return objectToSpawn;
     }
 
-    //onenable instead of interafce and then obv setactive to fglase upon a certain condition occuring
+    private IEnumerator WaitToDisable(GameObject objectSpawn)
+    {
+        yield return new WaitForSeconds(3);
+        objectSpawn.SetActive(false);
+    }
 }
